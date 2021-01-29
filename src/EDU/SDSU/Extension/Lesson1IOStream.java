@@ -32,7 +32,7 @@ public class Lesson1IOStream {
         try {
             argument = arguments[0];
         } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
-            System.err.println("Oops!");
+            System.err.println("Oops, an argument is required!");
             lesson1IOStream.syntaxSummary();
             System.exit(1);
         }
