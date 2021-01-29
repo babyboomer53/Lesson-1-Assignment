@@ -36,26 +36,22 @@ public class Lesson1IOStream {
             lesson1IOStream.syntaxSummary();
             System.exit(1);
         }
-        for (String string : arguments) {
-            System.out.printf("\"%s\" ", string);
-        }
-        System.out.println();
 
-        switch (argument.substring(2)) {
-            case "help":
+        switch (argument) {
+            case "--help":
                 lesson1IOStream.syntaxSummary();
                 break;
-            case "object":
+            case "--object":
                 System.out.println("Object I/O is not yet implemented.");
                 break;
-            case "binary":
+            case "--binary":
                 System.out.println("Binary I/O is not yet implemented.");
                 break;
-            case "text":
+            case "--text":
                 System.out.println("Text I/O is not yet implemented.");
                 break;
             default:
-                System.out.printf("%n\"%s\" is not a valid argument!%n",argument);
+                System.err.printf("%n\"%s\" is not a valid argument!%n",argument);
                 lesson1IOStream.syntaxSummary();
                 System.exit(1);
         }
