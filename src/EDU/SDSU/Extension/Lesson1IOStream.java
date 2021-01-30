@@ -6,7 +6,7 @@ import java.time.*;
 class Employee implements Serializable {
     private String name;
     private double salary;
-    private LocalDate hireDay;
+    private LocalDate hireDate;
 
     public Employee() {
     }
@@ -14,7 +14,7 @@ class Employee implements Serializable {
     public Employee(String name, double salary, int year, int month, int day) {
         this.name = name;
         this.salary = salary;
-        hireDay = LocalDate.of(year, month, day);
+        hireDate = LocalDate.of(year, month, day);
     }
 
     public String getName() {
@@ -26,7 +26,7 @@ class Employee implements Serializable {
     }
 
     public LocalDate getHireDay() {
-        return hireDay;
+        return hireDate;
     }
 
     /**
@@ -39,11 +39,12 @@ class Employee implements Serializable {
         salary += raise;
     }
 
+    @Override
     public String toString() {
-        return getClass().getName()
+        return getClass().getSimpleName()
                 + "[name=" + name
                 + ",salary=" + salary
-                + ",hireDay=" + hireDay
+                + ",hireDate=" + hireDate
                 + "]";
     }
 }
@@ -74,6 +75,7 @@ class Manager extends Employee implements Serializable {
         this.secretary = secretary;
     }
 
+    @Override
     public String toString() {
         return super.toString() + "[secretary=" + secretary + "]";
     }
@@ -109,11 +111,10 @@ public class Lesson1IOStream {
 
         Lesson1IOStream lesson1IOStream = new Lesson1IOStream();
         Employee employee = new Employee("Edgar Cole", 75_000, 2021, 6, 24);
-        Manager manager=new Manager("Grant Albright",90_000,2000,5,1);
+        Manager manager = new Manager("Grant Albright", 90_000, 2000, 5, 1);
         manager.setSecretary(employee);
         System.out.println(employee);
         System.out.println(manager);
-        System.exit(0);
         String argument = "";
         try {
             argument = arguments[0];
@@ -128,7 +129,8 @@ public class Lesson1IOStream {
                 lesson1IOStream.syntaxSummary();
                 break;
             case "--object":
-                System.out.println("Object I/O is not yet implemented.");
+                writeObjectStream("Employee.dat", 10_000);
+                readObjectStream("Employee.dat");
                 break;
             case "--binary":
                 System.out.println("Binary I/O is not yet implemented.");
@@ -141,5 +143,41 @@ public class Lesson1IOStream {
                 lesson1IOStream.syntaxSummary();
                 System.exit(1);
         }
+    }
+
+    private static void readObjectStream(String filename) {
+
+        try (var in = new ObjectInputStream(new FileInputStream(filename))) {
+            // retrieve all records into a new array
+
+            var newStaff = (Employee[]) in.readObject();
+
+            // raise secretary's salary
+            newStaff[1].raiseSalary(10);
+
+            // print the newly read employee records
+            for (Employee employee : newStaff)
+                System.out.println(employee);
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        } catch (IOException | ClassNotFoundException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    private static void writeObjectStream(String filename, int sampleSize) {
+        var staff = new Employee[sampleSize];
+        for (int index = 0; index < staff.length; index++) {
+            staff[index] = new Employee("Edgar Cole", 75_000, 2021, 1, 1);
+        }
+
+        // save all employee records to the file employee.dat
+        try (var out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeObject(staff);
+        } catch (IOException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        }
+
+
     }
 }
