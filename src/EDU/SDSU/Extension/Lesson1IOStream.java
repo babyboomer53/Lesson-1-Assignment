@@ -143,6 +143,7 @@ public class Lesson1IOStream {
                 lesson1IOStream.syntaxSummary();
                 System.exit(1);
         }
+
     }
 
     private static void readObjectStream(String filename) {
@@ -150,13 +151,11 @@ public class Lesson1IOStream {
         try (var in = new ObjectInputStream(new FileInputStream(filename))) {
             // retrieve all records into a new array
 
-            var newStaff = (Employee[]) in.readObject();
+            var staff = (Employee[]) in.readObject();
 
             // raise secretary's salary
-            newStaff[1].raiseSalary(10);
-
-            // print the newly read employee records
-            for (Employee employee : newStaff)
+            staff[1].raiseSalary(10);
+            for (Employee employee : staff)
                 System.out.println(employee);
         } catch (FileNotFoundException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
@@ -177,7 +176,6 @@ public class Lesson1IOStream {
         } catch (IOException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
         }
-
 
     }
 }
