@@ -112,11 +112,6 @@ public class Lesson1IOStream {
         String regex = "^--[bhot]?[ieb]?[nljx]?[apet]?[rc]*[yt]*$";
 
         Lesson1IOStream lesson1IOStream = new Lesson1IOStream();
-        Employee employee = new Employee("Edgar Cole", 75_000, 2021, 6, 24);
-        Manager manager = new Manager("Grant Albright", 90_000, 2000, 5, 1);
-        manager.setSecretary(employee);
-        System.out.println(employee);
-        System.out.println(manager);
         String argument = "";
         try {
             argument = arguments[0];
@@ -138,7 +133,6 @@ public class Lesson1IOStream {
                 System.out.println("Binary I/O is not yet implemented.");
                 break;
             case "--text":
-                System.out.println("Text I/O is not yet implemented.");
                 writeTextStream("Employee.dat", 10_000);
                 readTextStream("Employee.dat");
                 break;
@@ -157,7 +151,6 @@ public class Lesson1IOStream {
         }
         return temp;
     }
-
 
     /**
      * Writes employee data to a print writer
@@ -183,7 +176,6 @@ public class Lesson1IOStream {
             writeEmployee(out, employee);
         }
     }
-
 
     /**
      * Reads employee data from a buffered reader
@@ -231,8 +223,8 @@ public class Lesson1IOStream {
         try (var in = new Scanner(new FileInputStream(filename), "UTF-8")) {
             Employee[] newStaff = readData(in);
             // print the newly read employee records
-            for (Employee e : newStaff) {
-                System.out.println(e);
+            for (Employee employee : newStaff) {
+                System.out.println(employee);
             }
         } catch (FileNotFoundException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
