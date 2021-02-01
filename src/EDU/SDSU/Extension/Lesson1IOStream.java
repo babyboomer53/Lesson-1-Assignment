@@ -19,14 +19,23 @@ class Employee implements Serializable {
         hireDate = LocalDate.of(year, month, day);
     }
 
+    /**
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return
+     */
     public double getSalary() {
         return salary;
     }
 
+    /**
+     * @return
+     */
     public LocalDate getHireDay() {
         return hireDate;
     }
@@ -86,6 +95,9 @@ class Manager extends Employee implements Serializable {
 
 public class Lesson1IOStream {
 
+    /**
+     *
+     */
     public void syntaxSummary() {
         var commandName = getClass().getSimpleName();
         System.out.printf("%n%-7s%-16s%-9s%s%n%-7s%-16s%-9s%s%n%-7s%-16s%-9s%s%n%-7s%-16s%-9s%s%n",
@@ -130,7 +142,6 @@ public class Lesson1IOStream {
                 readObjectStream("Employee.dat");
                 break;
             case "--binary":
-                // System.out.println("Binary I/O is not yet implemented.");
                 writeBinaryStream("Employee.dat", 10_000);
                 readBinaryStream("Employee.dat");
                 break;
@@ -146,6 +157,9 @@ public class Lesson1IOStream {
 
     }
 
+    /**
+     * @param filename
+     */
     private static void readBinaryStream(String filename) {
 
         try (var in = new ObjectInputStream(new FileInputStream(filename))) {
@@ -166,6 +180,10 @@ public class Lesson1IOStream {
         }
     }
 
+    /**
+     * @param filename
+     * @param sampleSize
+     */
     private static void writeBinaryStream(String filename, int sampleSize) {
 
         // save all employee records to the file Employee.dat
@@ -178,6 +196,10 @@ public class Lesson1IOStream {
         }
     }
 
+    /**
+     * @param sampleSize
+     * @return
+     */
     private static Employee[] generateData(int sampleSize) {
         Employee[] temp = new Employee[sampleSize];
         for (int index = 0; index < sampleSize; index++) {
@@ -248,12 +270,6 @@ public class Lesson1IOStream {
 
     private static void readTextStream(String filename) {
 
-        /**
-         * Reads employee data from a buffered reader
-         * @param in the scanner
-         */
-
-        // retrieve all records into a new array
         try (var in = new Scanner(new FileInputStream(filename), "UTF-8")) {
             Employee[] newStaff = readData(in);
             // print the newly read employee records
@@ -265,6 +281,11 @@ public class Lesson1IOStream {
         }
     }
 
+    /**
+     * @param filename
+     * @param sampleSize
+     * @throws IOException
+     */
     private static void writeTextStream(String filename, int sampleSize) throws IOException {
 
         // save all employee records to the file Employee.dat
@@ -273,13 +294,13 @@ public class Lesson1IOStream {
         }
     }
 
+    /**
+     * @param filename
+     */
     private static void readObjectStream(String filename) {
-
         try (var in = new ObjectInputStream(new FileInputStream(filename))) {
             // retrieve all records into a new array
-
             var staff = (Employee[]) in.readObject();
-
             // raise secretary's salary
             staff[1].raiseSalary(10);
             for (Employee employee : staff)
@@ -292,10 +313,6 @@ public class Lesson1IOStream {
     }
 
     private static void writeObjectStream(String filename, int sampleSize) {
-        var staff = new Employee[sampleSize];
-        for (int index = 0; index < staff.length; index++) {
-            staff[index] = new Employee("Edgar Cole", 75_000, 2021, 1, 1);
-        }
         // save all employee records to the file Employee.dat
         try (var out = new ObjectOutputStream(new FileOutputStream(filename))) {
             out.writeObject(generateData(sampleSize));
