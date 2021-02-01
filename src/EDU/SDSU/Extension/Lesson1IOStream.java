@@ -130,7 +130,9 @@ public class Lesson1IOStream {
                 readObjectStream("Employee.dat");
                 break;
             case "--binary":
-                System.out.println("Binary I/O is not yet implemented.");
+                // System.out.println("Binary I/O is not yet implemented.");
+                writeBinaryStream("Employee.dat", 10_000);
+                readBinaryStream("Employee.dat");
                 break;
             case "--text":
                 writeTextStream("Employee.dat", 10_000);
@@ -142,6 +144,38 @@ public class Lesson1IOStream {
                 System.exit(1);
         }
 
+    }
+
+    private static void readBinaryStream(String filename) {
+
+        try (var in = new ObjectInputStream(new FileInputStream(filename))) {
+            // retrieve all records into a new array
+
+            var newStaff = (Employee[]) in.readObject();
+
+            // raise secretary's salary
+            newStaff[1].raiseSalary(10);
+
+            // print the newly read employee records
+            for (Employee e : newStaff)
+                System.out.println(e);
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        } catch (IOException | ClassNotFoundException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    private static void writeBinaryStream(String filename, int sampleSize) {
+
+        // save all employee records to the file Employee.dat
+        try (var out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeObject(generateData(10_000));
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
 
     private static Employee[] generateData(int sampleSize) {
@@ -262,7 +296,7 @@ public class Lesson1IOStream {
         for (int index = 0; index < staff.length; index++) {
             staff[index] = new Employee("Edgar Cole", 75_000, 2021, 1, 1);
         }
-        // save all employee records to the file employee.dat
+        // save all employee records to the file Employee.dat
         try (var out = new ObjectOutputStream(new FileOutputStream(filename))) {
             out.writeObject(generateData(sampleSize));
         } catch (IOException fileNotFoundException) {
