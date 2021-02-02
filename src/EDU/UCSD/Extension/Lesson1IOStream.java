@@ -121,8 +121,6 @@ public class Lesson1IOStream {
 
     public static void main(String[] arguments) throws IOException {
 
-        String regex = "^--[bhot]?[ieb]?[nljx]?[apet]?[rc]*[yt]*$";
-
         Lesson1IOStream lesson1IOStream = new Lesson1IOStream();
         String argument = "";
         try {
@@ -161,15 +159,11 @@ public class Lesson1IOStream {
      * @param filename
      */
     private static void readBinaryStream(String filename) {
-
         try (var in = new ObjectInputStream(new FileInputStream(filename))) {
             // retrieve all records into a new array
-
             var newStaff = (Employee[]) in.readObject();
-
             // raise secretary's salary
             newStaff[1].raiseSalary(10);
-
             // print the newly read employee records
             for (Employee e : newStaff)
                 System.out.println(e);
@@ -185,7 +179,6 @@ public class Lesson1IOStream {
      * @param sampleSize
      */
     private static void writeBinaryStream(String filename, int sampleSize) {
-
         // save all employee records to the file Employee.dat
         try (var out = new ObjectOutputStream(new FileOutputStream(filename))) {
             out.writeObject(generateData(10_000));
@@ -203,7 +196,7 @@ public class Lesson1IOStream {
     private static Employee[] generateData(int sampleSize) {
         Employee[] temp = new Employee[sampleSize];
         for (int index = 0; index < sampleSize; index++) {
-            temp[index] = new Employee("Edgar Cole", 75_000, 2021, 1, 1);
+            temp[index] = new Employee("Edgar Cole", 75_000, 2021, 10, 1);
         }
         return temp;
     }
@@ -269,7 +262,6 @@ public class Lesson1IOStream {
     }
 
     private static void readTextStream(String filename) {
-
         try (var in = new Scanner(new FileInputStream(filename), "UTF-8")) {
             Employee[] newStaff = readData(in);
             // print the newly read employee records
@@ -287,7 +279,6 @@ public class Lesson1IOStream {
      * @throws IOException
      */
     private static void writeTextStream(String filename, int sampleSize) throws IOException {
-
         // save all employee records to the file Employee.dat
         try (var out = new PrintWriter(filename, StandardCharsets.UTF_8)) {
             writeData(generateData(sampleSize), out);
@@ -319,6 +310,5 @@ public class Lesson1IOStream {
         } catch (IOException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
         }
-
     }
 }
