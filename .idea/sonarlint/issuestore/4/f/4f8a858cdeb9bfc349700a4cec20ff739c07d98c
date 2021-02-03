@@ -1,0 +1,10 @@
+
+W
+java:S4719‰"9Replace charset name argument with StandardCharsets.UTF_8(Şêæâ8¸ñµÎõ.
+k
+java:S1192‹"MDefine a constant instead of duplicating this literal "Employee.dat" 6 times.(½àğà8é¶Íõ.
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Àı§„
+Š
+java:S1130Ü"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(¹£ş8©òûÍõ.
+T
+java:S1172µ"1Remove this unused method parameter "sampleSize".(‘Ëø“üÿÿÿÿ8ø·Øõ.
